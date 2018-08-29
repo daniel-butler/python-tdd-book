@@ -54,8 +54,6 @@ class NewVistorTest(unittest.TestCase):
         time.sleep(1)
 
         # The page updates again, and now shows both items on her lists
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
         self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
