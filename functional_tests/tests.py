@@ -1,6 +1,6 @@
 import time
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 from selenium import webdriver
@@ -9,12 +9,13 @@ from selenium import webdriver
 MAX_WAIT = 10
 
 
-class NewVistorTest(LiveServerTestCase):
+class NewVistorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
 
     def tearDown(self):
+        self.browser.refresh()
         self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
@@ -119,6 +120,7 @@ class NewVistorTest(LiveServerTestCase):
 
         ## We use a new browser session to make sure that no information of
         ## Edith's is coming through from cookies etc.
+        self.browser.refresh()
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
