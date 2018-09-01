@@ -1,4 +1,5 @@
 import time
+import os
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
@@ -13,9 +14,11 @@ class NewVistorTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = f'http://{staging_server}'
 
     def tearDown(self):
-        self.browser.refresh()
         self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
