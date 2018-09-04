@@ -11,7 +11,7 @@ class HomePageTest(TestCase):
 
     def test_home_page_uses_home_template(self):
         response = self.client.get('/')
-        self.assertTemplateUsed(response, r'lists\home.html')
+        self.assertTemplateUsed(response, r'lists/home.html')
 
 class ListAndItemModelTest(TestCase):
 
@@ -48,7 +48,7 @@ class ListViewTest(TestCase):
     def test_uses_list_template(self):
         list_ = List.objects.create()
         response = self.client.get(f'/lists/{list_.id}/')
-        self.assertTemplateUsed(response, r'lists\list.html')
+        self.assertTemplateUsed(response, r'lists/list.html')
 
     def test_displays_all_items(self):
         correct_list = List.objects.create()
