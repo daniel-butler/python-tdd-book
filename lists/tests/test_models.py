@@ -39,3 +39,7 @@ class ListAndItemModelTest(TestCase):
         with self.assertRaises(ValidationError, msg="Able to save item with empty text"):
             item.save()
             item.full_clean()
+
+    def test_get_absolute_url(self):
+        list_ = List.objects.create()
+        self.assertEqual(list_.get_absolute_url(), f'/lists/{list_.id}/')
