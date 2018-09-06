@@ -10,7 +10,7 @@ class ItemValidationTest(FunctionalTest):
         # Edith goes to the home page and accidentally tries to submit an empty
         # list item. She hits enter on the empty input box
         self.browser.get(self.live_server_url)
-        self.browser.get_item_input_box().send_keys(Keys.ENTER)
+        self.get_item_input_box().send_keys(Keys.ENTER)
 
         # The home page refreshes, and there is an error message saying that
         # list items cannot be blank
@@ -27,7 +27,7 @@ class ItemValidationTest(FunctionalTest):
         self.wait_for_row_in_list_table('1: Buy milk')
 
         # Perversely, she now decides to submit a second blank list item
-        self.browser.get_item_input_box().send_keys(Keys.ENTER)
+        self.get_item_input_box().send_keys(Keys.ENTER)
 
         # She receives a similar warning on the list page
         self.wait_for(lambda: self.assertEqual(
