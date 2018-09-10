@@ -2,7 +2,7 @@ import random
 from fabric.contrib.files import append, exists
 from fabric.api import cd, env, local, run
 
-REPO_URL = 'ssh://git@phab.accounting.equipment:2222/diffusion/5/python-tdd-book.git'
+REPO_URL = 'https://github.com/dbutlerdb/python-tdd-book.git'
 env.user = 'daniel'
 
 def deploy():
