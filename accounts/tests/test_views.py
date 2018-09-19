@@ -64,9 +64,17 @@ class LoginViewTest(TestCase):
         self.assertIn(expected_url, body)
 
     @patch('accounts.views.auth')
-    def test_calls_authenticate_with_uid_from_get_request(self, mock_auth)
+    def test_calls_authenticate_with_uid_from_get_request(self, mock_auth):
         self.client.get("/accounts/login?token=abcd123")
         self.assertEqual(
             mock_auth.authenticate.call_args,
             call(uid='abcd123')
+        )
+
+    @patch('accounts.views.auth')
+    def test_calls_auth_login_with_user_if_there_is_one(self, mock_auth):
+        response = self.client.get("/accounts/login?token=abcd123")
+        self.assertEqual(
+            mock_auth.authenticate.call_args,
+            call(response.wsgi_request, mock_auth.authenticate.return_value)
         )
