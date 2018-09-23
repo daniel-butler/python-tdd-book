@@ -18,7 +18,7 @@ class LoginTest(FunctionalTest):
         # section in the navbar for the first time
         # It's telling her to enter her email address, so she does
         if self.staging_server:
-            test_email = 'thisdoesnotworknoreply@gmail.com'
+            test_email = 'edithexample7@yahoo.com'
         else:
             test_email = 'edith@example.com'
         self.browser.get(self.live_server_url)
@@ -57,16 +57,16 @@ class LoginTest(FunctionalTest):
     def wait_for_email(self, test_email, subject):
         if not self.staging_server:
             email = mail.outbox[0]
-            self.assertIn(TEST_EMAIL, email.to)
+            self.assertIn(test_email, email.to)
             self.assertEqual(email.subject, subject)
             return email.body
 
         email_id = None
         start = time.time()
-        inbox = poplib.POP3_SSL('pop.gmail.com')
+        inbox = poplib.POP3_SSL('pop.mail.yahoo.com')
         try:
             inbox.user(test_email)
-            inbox.pass_(os.environ['EMAIL_PASSWORD'])
+            inbox.pass_(os.environ['YAHOO_PASSWORD'])
             while time.time() - start < 60:
                 # get 10 newest messages
                 count, _ = inbox.stat()
@@ -74,7 +74,6 @@ class LoginTest(FunctionalTest):
                     print('getting msg', i)
                     _, lines, __ = inbox.retr(i)
                     lines = [l.decode('utf-8') for l in lines]
-                    print(lines)
                     if f'Subject: {subject}' in lines:
                         email_id = i
                         body = '\n'.join(lines)
