@@ -26,3 +26,6 @@ def new_list(request):
         return redirect(list_)
     else:
         return render(request, 'lists/home.html', {"form": form})
+
+def my_lists(request, email):
+    return render(request, 'lists/my_lists.html')
