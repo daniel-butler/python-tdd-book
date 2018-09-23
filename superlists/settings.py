@@ -145,14 +145,14 @@ else:
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'handlers':{
+    'handlers': {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
     },
-    'loggers':{
-        'django':{
+    'loggers': {
+        'django': {
             'handlers': ['console'],
         },
     },
