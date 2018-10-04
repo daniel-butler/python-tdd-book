@@ -6,3 +6,4 @@ __pycache__
 /static
 .env
 vim.exe.stackdump
+functional_tests/screendumps/
