@@ -31,3 +31,10 @@ def new_list(request):
         list_ = form.save(owner=request.user)
         return redirect(list_)
     return render(request, 'lists/home.html', {'form': form})
+
+def share(request, list_id):
+    list_ = List.objects.get(id=list_id)
+    if request.method == 'POST':
+        email = request.POST['email']
+        list_.shared_with.add(email)
+    return redirect(list_)

@@ -6,6 +6,7 @@ from lists.models import Item, List
 EMPTY_ITEM_ERROR = "You can't have an empty list item"
 DUPLICATE_ITEM_ERROR = "You've already got this in your list"
 
+
 class ItemForm(forms.models.ModelForm):
 
     class Meta:
@@ -44,3 +45,13 @@ class ExistingListItemForm(ItemForm):
         except ValidationError as e:
             e.error_dict = {'text': [DUPLICATE_ITEM_ERROR]}
             self._update_errors(e)
+
+
+class ShareListForm(forms.models.ModelForm):
+    def __init__(self, email):
+        self.email = email
+
+
+    class Meta:
+        model = List
+        fields = ('shared_with',)

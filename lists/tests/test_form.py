@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from lists.forms import (
     DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR,
-    ExistingListItemForm, ItemForm, NewListForm
+    ExistingListItemForm, ItemForm, NewListForm, ShareListForm
 )
 from lists.models import Item, List
 
@@ -91,3 +91,19 @@ class NewListFormTest(unittest.TestCase):
         form.is_valid()
         response = form.save(owner=user)
         self.assertEqual(response, mock_List_create_new.return_value)
+
+
+class ShareListFormTest(unittest.TestCase):
+
+    @patch('lists.forms.List.shared_with')
+    def test_shared_email_is_an_existing_user_email(
+        self, mock_List_shared_with
+    ):
+        form = ShareListForm(email='edith@example.com')
+        mock_List_shared_with.assert_called_once_with(
+            is_user_email='edith@example.com'
+        )
+
+    @unittest.skip
+    def test_shared_email_is__not_an_existing_user_email_user_gets_an_error(self):
+        self.fail()

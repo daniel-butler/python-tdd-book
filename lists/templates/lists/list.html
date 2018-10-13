@@ -11,3 +11,20 @@
       {% endfor %}
     </table>
 {% endblock %}
+
+{% block extra_content %}
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-sharee">
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <div class="input-group">
+            <input class="form-control" name="sharee" placeholder="your-friend@example.com">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Share!</button>
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -5,6 +5,11 @@ from django.core.urlresolvers import reverse
 
 class List(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    shared_with = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='list_shared_with',
+        related_query_name='list_shared_withs'
+,    )
 
     def get_absolute_url(self):
         return reverse('view_list', args=[self.id])
