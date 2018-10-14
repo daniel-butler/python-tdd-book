@@ -18,13 +18,17 @@
         <ul class="list-sharee">
         </ul>
     </div>
+
     <div class="col-md-6">
-        <div class="input-group">
-            <input class="form-control" name="sharee" placeholder="your-friend@example.com">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Share!</button>
-            </span>
-        </div>
+        <form method="POST" action="#">
+          {{ share_form.as_p }}
+          {% csrf_token %}
+          {% if share_form.errors %}
+            <div class="form-group has-error">
+              <span class="help-block">{{ share_form.text.errors }} </span>
+            </div>
+          {% endif %}
+        </form>
     </div>
 </div>
 {% endblock%}

@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from lists.models import Item, List
-from lists.forms import ItemForm, ExistingListItemForm, NewListForm
+from lists.forms import ItemForm, ExistingListItemForm, NewListForm, ShareListForm
 
 User = get_user_model()
 
@@ -14,12 +14,16 @@ def home_page(request):
 def view_list(request, list_id):
     list_ = List.objects.get(id=list_id)
     form = ExistingListItemForm(for_list=list_)
+    share_form = ShareListForm()
     if request.method == 'POST':
         form = ExistingListItemForm(for_list=list_, data=request.POST)
         if form.is_valid():
             form.save()
             return redirect(list_)
-    return render(request, r'lists/list.html', {'list': list_, 'form': form,})
+    return render(
+        request, r'lists/list.html',
+        {'list': list_, 'form': form, 'share_form': share_form}
+    )
 
 def my_lists(request, email):
     owner = User.objects.get(email=email)

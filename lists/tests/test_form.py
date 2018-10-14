@@ -1,12 +1,16 @@
 import unittest
 from unittest.mock import patch, Mock
+
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 
 from lists.forms import (
-    DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR,
+    DUPLICATE_ITEM_ERROR, EMPTY_ITEM_ERROR, EMPTY_EMAIL_ERROR,
     ExistingListItemForm, ItemForm, NewListForm, ShareListForm
 )
 from lists.models import Item, List
+
+User = get_user_model()
 
 
 class ItemFormTest(TestCase):
@@ -95,11 +99,29 @@ class NewListFormTest(unittest.TestCase):
 
 class ShareListFormTest(unittest.TestCase):
 
+    def test_form_renders_email_input(self):
+        form = ShareListForm()
+        self.assertIn('placeholder="your-friend@example.com"', form.as_p())
+        self.assertIn('class="form-control"', form.as_p())
+        self.assertIn('name="sharee"', form.as_p())
+
+    def test_form_validation_for_blank_email(self):
+        form = ShareListForm(data={'shared_with': ''})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(
+            form.errors['shared_with'],
+            [EMPTY_EMAIL_ERROR]
+        )
+
     @patch('lists.forms.List.shared_with')
     def test_shared_email_is_an_existing_user_email(
         self, mock_List_shared_with
     ):
-        form = ShareListForm(email='edith@example.com')
+        list_ = List.objects.create()
+        user = User.objects.create(email='edith@example.com')
+        form = ShareListForm({'shared_with':'edith@example.com', 'id':list_.id})
+        form.is_valid()
+        form.save()
         mock_List_shared_with.assert_called_once_with(
             is_user_email='edith@example.com'
         )

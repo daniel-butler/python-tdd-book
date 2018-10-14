@@ -12,7 +12,10 @@ from django.contrib.auth import get_user_model
 
 from lists.views import home_page, new_list
 from lists.models import Item, List
-from lists.forms import ItemForm, ExistingListItemForm, EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR
+from lists.forms import (
+    ItemForm, ExistingListItemForm, ShareListForm,
+    EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR
+)
 
 User = get_user_model()
 
@@ -107,6 +110,14 @@ class ListViewTest(TestCase):
         response = self.client.post(f'/lists/{list_.id}/', data={'text': ''})
         self.assertIsInstance(response.context['form'], ExistingListItemForm)
         self.assertContains(response, 'name="text"')
+
+    def test_list_uses_Share_List_Form(self):
+        list_ = List.objects.create()
+        response = self.client.get(f"/lists/{list_.id}/")
+        self.assertIsInstance(response.context['share_form'], ShareListForm)
+        self.assertContains(response, 'name="sharee"')
+        self.assertContains(response, 'Share With:"')  # Label
+
 
 
 class NewListViewIntegratedTest(TestCase):

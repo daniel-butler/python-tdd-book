@@ -1,3 +1,4 @@
+from django.forms import EmailInput
 from django.core.exceptions import ValidationError
 from django import forms
 
@@ -5,6 +6,7 @@ from lists.models import Item, List
 
 EMPTY_ITEM_ERROR = "You can't have an empty list item"
 DUPLICATE_ITEM_ERROR = "You've already got this in your list"
+EMPTY_EMAIL_ERROR = "Email not filled in"
 
 
 class ItemForm(forms.models.ModelForm):
@@ -19,7 +21,7 @@ class ItemForm(forms.models.ModelForm):
             }),
         }
         error_messages = {
-            'text': {'required': EMPTY_ITEM_ERROR}
+            'text': {'required': EMPTY_ITEM_ERROR},
         }
 
 
@@ -48,10 +50,19 @@ class ExistingListItemForm(ItemForm):
 
 
 class ShareListForm(forms.models.ModelForm):
-    def __init__(self, email):
-        self.email = email
-
 
     class Meta:
         model = List
         fields = ('shared_with',)
+        widgets = {
+            'shared_with': EmailInput(attrs={
+                'placeholder': 'your-friend@example.com',
+                'class': 'form-control',
+                'name': 'sharee',
+            },
+                label='Share With'
+            ),
+        }
+        error_messages = {
+            'shared_with': {'required': EMPTY_EMAIL_ERROR}
+        }
