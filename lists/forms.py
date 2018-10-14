@@ -1,5 +1,6 @@
 from django.forms import EmailInput
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 
 from lists.models import Item, List
@@ -59,9 +60,10 @@ class ShareListForm(forms.models.ModelForm):
                 'placeholder': 'your-friend@example.com',
                 'class': 'form-control',
                 'name': 'sharee',
-            },
-                label='Share With'
-            ),
+            })
+        }
+        labels = {
+            'shared_with': _('Share With:'),
         }
         error_messages = {
             'shared_with': {'required': EMPTY_EMAIL_ERROR}

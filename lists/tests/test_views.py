@@ -9,6 +9,7 @@ from django.http import HttpRequest
 from django.template.loader import render_to_string
 from django.utils.html import escape
 from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
 
 from lists.views import home_page, new_list
 from lists.models import Item, List
@@ -116,7 +117,7 @@ class ListViewTest(TestCase):
         response = self.client.get(f"/lists/{list_.id}/")
         self.assertIsInstance(response.context['share_form'], ShareListForm)
         self.assertContains(response, 'name="sharee"')
-        self.assertContains(response, 'Share With:"')  # Label
+        self.assertContains(response, _('Share With'))  # Label
 
 
 
