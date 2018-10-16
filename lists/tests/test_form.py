@@ -97,35 +97,38 @@ class NewListFormTest(unittest.TestCase):
         self.assertEqual(response, mock_List_create_new.return_value)
 
 
-class ShareListFormTest(unittest.TestCase):
+class ShareListFormTest(TestCase):
 
     def test_form_renders_email_input(self):
-        form = ShareListForm()
+        list_ = List.objects.create()
+        form = ShareListForm(for_list=list_)
         self.assertIn('placeholder="your-friend@example.com"', form.as_p())
         self.assertIn('class="form-control"', form.as_p())
         self.assertIn('name="sharee"', form.as_p())
 
     def test_form_validation_for_blank_email(self):
-        form = ShareListForm(data={'shared_with': ''})
+        list_ = List.objects.create()
+        form = ShareListForm(for_list=list_, data={'shared_with': ''})
         self.assertFalse(form.is_valid())
         self.assertEqual(
             form.errors['shared_with'],
             [EMPTY_EMAIL_ERROR]
         )
 
-    @patch('lists.forms.List.shared_with')
-    def test_shared_email_is_an_existing_user_email(
-        self, mock_List_shared_with
-    ):
+    def test_shared_email_is_an_existing_user_email(self):
         list_ = List.objects.create()
         user = User.objects.create(email='edith@example.com')
-        form = ShareListForm({'shared_with':'edith@example.com', 'id':list_.id})
+        form = ShareListForm(for_list=list_, data={'shared_with':'edith@example.com'})
         form.is_valid()
-        form.save()
-        mock_List_shared_with.assert_called_once_with(
-            is_user_email='edith@example.com'
-        )
+        print(form.errors)
 
-    @unittest.skip
-    def test_shared_email_is__not_an_existing_user_email_user_gets_an_error(self):
-        self.fail()
+        self.assertTrue(form.is_valid())  # Both a test and to validate form
+        form.save()
+        self.assertIn(user, list_.shared_with.all())
+
+    def test_shared_email_is_not_an_user_email(self):
+        list_ = List.objects.create()
+        form = ShareListForm(for_list=list_, data={'shared_with':'edith@example.com'})
+        self.assertTrue(form.is_valid())   # Both a test and to validate form
+        form.save()
+        user = User.objects.filter(email='edith@example.com')

@@ -118,8 +118,7 @@ class ListViewTest(TestCase):
         self.assertIsInstance(response.context['share_form'], ShareListForm)
         self.assertContains(response, 'name="sharee"')
         self.assertContains(response, _('Share With'))  # Label
-
-
+        
 
 class NewListViewIntegratedTest(TestCase):
 

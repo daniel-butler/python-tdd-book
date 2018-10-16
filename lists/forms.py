@@ -10,6 +10,21 @@ DUPLICATE_ITEM_ERROR = "You've already got this in your list"
 EMPTY_EMAIL_ERROR = "Email not filled in"
 
 
+class ShareEmailField(forms.EmailField):
+    widget = EmailInput()
+    is_hidden = False
+    attrs={
+        'placeholder': 'your-friend@example.com',
+        'class': 'form-control', 'name': 'sharee',
+    }
+    id_for_label='share'
+
+    def to_python(self, value):
+        if not value:
+            return []
+        user = User.objects.filter(email=value)
+        return user
+
 class ItemForm(forms.models.ModelForm):
 
     class Meta:
@@ -52,18 +67,19 @@ class ExistingListItemForm(ItemForm):
 
 class ShareListForm(forms.models.ModelForm):
 
+    def __init__(self, for_list, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instance.list = for_list
+
+
     class Meta:
         model = List
         fields = ('shared_with',)
         widgets = {
-            'shared_with': EmailInput(attrs={
-                'placeholder': 'your-friend@example.com',
-                'class': 'form-control',
-                'name': 'sharee',
-            })
+            'shared_with': ShareEmailField()
         }
         labels = {
-            'shared_with': _('Share With:'),
+            'shared_with': _('Share With'),
         }
         error_messages = {
             'shared_with': {'required': EMPTY_EMAIL_ERROR}
