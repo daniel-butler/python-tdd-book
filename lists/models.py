@@ -8,8 +8,8 @@ class List(models.Model):
     shared_with = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='list_shared_with',
-        related_query_name='list_shared_withs'
-,    )
+        related_query_name='list_shared_withs',
+    )
 
     def get_absolute_url(self):
         return reverse('view_list', args=[self.id])
