@@ -100,35 +100,24 @@ class NewListFormTest(unittest.TestCase):
 class ShareListFormTest(TestCase):
 
     def test_form_renders_email_input(self):
-        list_ = List.objects.create()
-        form = ShareListForm(for_list=list_)
+        form = ShareListForm()
         self.assertIn('placeholder="your-friend@example.com"', form.as_p())
         self.assertIn('class="form-control"', form.as_p())
         self.assertIn('name="sharee"', form.as_p())
 
     def test_form_validation_for_blank_email(self):
-        list_ = List.objects.create()
-        form = ShareListForm(for_list=list_, data={'shared_with': ''})
+        form = ShareListForm(data={'shared_with': ''})
         self.assertFalse(form.is_valid())
-        self.assertEqual(
-            form.errors['shared_with'],
-            [EMPTY_EMAIL_ERROR]
-        )
+        self.assertEqual(form.errors['email'], [EMPTY_EMAIL_ERROR])
 
-    def test_shared_email_is_an_existing_user_email(self):
-        list_ = List.objects.create()
+    def test_shared_email_is_a_users(self):
         user = User.objects.create(email='edith@example.com')
-        form = ShareListForm(for_list=list_, data={'shared_with':'edith@example.com'})
-        form.is_valid()
-        print(form.errors)
-
-        self.assertTrue(form.is_valid())  # Both a test and to validate form
-        form.save()
-        self.assertIn(user, list_.shared_with.all())
+        form = ShareListForm(data={'email': 'edith@example.com'})
+        self.assertTrue(form.is_valid())
+        self.assertEqual('edith@example.com', form.cleaned_data['email'])
 
     def test_shared_email_is_not_an_user_email(self):
-        list_ = List.objects.create()
-        form = ShareListForm(for_list=list_, data={'shared_with':'edith@example.com'})
-        self.assertTrue(form.is_valid())   # Both a test and to validate form
-        form.save()
-        user = User.objects.filter(email='edith@example.com')
+        form = ShareListForm(data={'email': 'edith@example.com'})
+        self.assertTrue(form.is_valid())
+        self.assertEqual('edith@example.com', form.cleaned_data['email'])
+

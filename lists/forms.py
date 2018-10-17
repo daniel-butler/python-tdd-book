@@ -53,27 +53,10 @@ class ExistingListItemForm(ItemForm):
             self._update_errors(e)
 
 
-class ShareListForm(forms.models.ModelForm):
+class ShareListForm(forms.Form):
 
-    shared_with = forms.EmailField(
+    email = forms.EmailField(
         label=_('Share With'),
         widget=EmailInput(attrs={'placeholder': 'your-friend@example.com', 'class': 'form-control', 'name': 'sharee'}),
         error_messages={'required': EMPTY_EMAIL_ERROR},
     )
-
-    def __init__(self, for_list, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.instance.list = for_list
-
-    def clean_shared_with(self):
-        shared_with = self.cleaned_data['shared_with']
-        if len(User.objects.filter(email=shared_with)) != 1:
-            shared_with = User.objects.create(email=shared_with)
-        else:
-            shared_with = User.objects.filter(email=shared_with)[0]
-        self.instance.list.shared_with.add(shared_with)
-        return shared_with
-
-    class Meta:
-        model = List
-        exclude = ('shared_with', 'owner')

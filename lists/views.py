@@ -15,7 +15,7 @@ def home_page(request):
 def view_list(request, list_id):
     list_ = List.objects.get(id=list_id)
     form = ExistingListItemForm(for_list=list_)
-    share_form = ShareListForm(for_list=list_)
+    share_form = ShareListForm()
     if request.method == 'POST':
         form = ExistingListItemForm(for_list=list_, data=request.POST)
         if form.is_valid():
@@ -44,5 +44,8 @@ def share(request, list_id):
     list_ = List.objects.get(id=list_id)
     if request.method == 'POST':
         email = request.POST['email']
+        if len(User.objects.filter(email=email)) == 0:
+            user = User.objects.create(email=email)
+            user.save()
         list_.shared_with.add(email)
     return redirect(list_)
