@@ -57,13 +57,8 @@ class ShareListForm(forms.models.ModelForm):
 
     shared_with = forms.EmailField(
         label=_('Share With'),
-        widget=EmailInput(attrs={
-            'placeholder': 'your-friend@example.com',
-            'class': 'form-control', 'name': 'sharee',
-            }),
-        error_messages={
-            'required': EMPTY_EMAIL_ERROR
-        },
+        widget=EmailInput(attrs={'placeholder': 'your-friend@example.com', 'class': 'form-control', 'name': 'sharee'}),
+        error_messages={'required': EMPTY_EMAIL_ERROR},
     )
 
     def __init__(self, for_list, *args, **kwargs):
@@ -81,4 +76,4 @@ class ShareListForm(forms.models.ModelForm):
 
     class Meta:
         model = List
-        exclude = ('shared_with',)
+        exclude = ('shared_with', 'owner')

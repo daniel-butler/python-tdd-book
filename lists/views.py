@@ -11,6 +11,7 @@ User = get_user_model()
 def home_page(request):
     return render(request, r'lists/home.html', {'form': ItemForm()})
 
+
 def view_list(request, list_id):
     list_ = List.objects.get(id=list_id)
     form = ExistingListItemForm(for_list=list_)
@@ -25,9 +26,11 @@ def view_list(request, list_id):
         {'list': list_, 'form': form, 'share_form': share_form}
     )
 
+
 def my_lists(request, email):
     owner = User.objects.get(email=email)
     return render(request, 'lists/my_lists.html', {'owner': owner})
+
 
 def new_list(request):
     form = NewListForm(data=request.POST)
@@ -35,6 +38,7 @@ def new_list(request):
         list_ = form.save(owner=request.user)
         return redirect(list_)
     return render(request, 'lists/home.html', {'form': form})
+
 
 def share(request, list_id):
     list_ = List.objects.get(id=list_id)
