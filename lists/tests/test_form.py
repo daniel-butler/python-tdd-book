@@ -108,16 +108,15 @@ class ShareListFormTest(TestCase):
     def test_form_validation_for_blank_email(self):
         form = ShareListForm(data={'shared_with': ''})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['email'], [EMPTY_EMAIL_ERROR])
+        self.assertEqual(form.errors['sharee'], [EMPTY_EMAIL_ERROR])
 
     def test_shared_email_is_a_users(self):
         user = User.objects.create(email='edith@example.com')
-        form = ShareListForm(data={'email': 'edith@example.com'})
+        form = ShareListForm(data={'sharee': 'edith@example.com'})
         self.assertTrue(form.is_valid())
-        self.assertEqual('edith@example.com', form.cleaned_data['email'])
+        self.assertEqual('edith@example.com', form.cleaned_data['sharee'])
 
     def test_shared_email_is_not_an_user_email(self):
-        form = ShareListForm(data={'email': 'edith@example.com'})
+        form = ShareListForm(data={'sharee': 'edith@example.com'})
         self.assertTrue(form.is_valid())
-        self.assertEqual('edith@example.com', form.cleaned_data['email'])
-
+        self.assertEqual('edith@example.com', form.cleaned_data['sharee'])

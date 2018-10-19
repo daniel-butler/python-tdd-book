@@ -43,7 +43,7 @@ def new_list(request):
 def share(request, list_id):
     list_ = List.objects.get(id=list_id)
     if request.method == 'POST':
-        email = request.POST['email']
+        email = request.POST['sharee']
         if len(User.objects.filter(email=email)) == 0:
             user = User.objects.create(email=email)
             user.save()

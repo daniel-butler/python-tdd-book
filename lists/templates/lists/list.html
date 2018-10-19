@@ -16,11 +16,14 @@
 <div class="row">
     <div class="col-md-6">
         <ul class="list-sharee">
+            {% for sharee in list.shared_with.all %}
+                <li>{{ sharee.email }}</li>
+            {% endfor %}
         </ul>
     </div>
 
     <div class="col-md-6">
-        <form method="POST" action="#">
+        <form method="POST" action="{% url 'share' list.id %}">
           {{ share_form.as_p }}
           {% csrf_token %}
           {% if share_form.errors %}

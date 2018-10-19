@@ -118,7 +118,7 @@ class ListViewTest(TestCase):
         self.assertIsInstance(response.context['share_form'], ShareListForm)
         self.assertContains(response, 'name="sharee"')
         self.assertContains(response, _('Share With'))  # Label
-        
+
 
 class NewListViewIntegratedTest(TestCase):
 
@@ -257,7 +257,7 @@ class ShareListTest(TestCase):
     def test_share_list_POST_renders_share_template(self):
         response = self.client.post(
             f'/lists/{self.list_.id}/share',
-            {'email': self.email}
+            {'sharee': self.email}
         )
         self.assertRedirects(response, f'/lists/{self.list_.id}/')
 
@@ -266,10 +266,10 @@ class ShareListTest(TestCase):
         self.assertRedirects(response, f'/lists/{self.list_.id}/')
 
     def test_user_can_share_a_list(self):
-        self.client.post(f'/lists/{self.list_.id}/share', {'email': self.email})
+        self.client.post(f'/lists/{self.list_.id}/share', {'sharee': self.email})
         self.assertIn(self.user, self.list_.shared_with.all())
 
     def test_user_can_share_list_with_nonuser(self):
         email = 'someone@else.com'
-        self.client.post(f'/lists/{self.list_.id}/share', {'email': email})
+        self.client.post(f'/lists/{self.list_.id}/share', {'sharee': email})
         self.assertIn(User.objects.filter(email=email)[0], self.list_.shared_with.all())

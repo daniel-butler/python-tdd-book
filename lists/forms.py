@@ -55,8 +55,8 @@ class ExistingListItemForm(ItemForm):
 
 class ShareListForm(forms.Form):
 
-    email = forms.EmailField(
+    sharee = forms.EmailField(
         label=_('Share With'),
-        widget=EmailInput(attrs={'placeholder': 'your-friend@example.com', 'class': 'form-control', 'name': 'sharee'}),
+        widget=EmailInput(attrs={'placeholder': 'your-friend@example.com', 'class': 'form-control'}),
         error_messages={'required': EMPTY_EMAIL_ERROR},
     )
