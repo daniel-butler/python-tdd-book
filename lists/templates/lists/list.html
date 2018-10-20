@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-6">
         <ul>
-            <li class="list-sharee">{{ list.owner.email }}</li>
+            <li class="list-sharee" id="id_list_owner">{{ list.owner.email }}</li>
             {% for sharee in list.shared_with.all %}
                 <li class="list-sharee">{{ sharee.email }}</li>
             {% endfor %}

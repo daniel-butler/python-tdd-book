@@ -35,7 +35,7 @@ class SharingTest(FunctionalTest):
             share_box.get_attribute('placeholder'),
             'your-friend@example.com'
         )
-        
+
         # She shares her list.
         # The page updates to say that it's shared with Oniciferous
         list_page.share_list_with('oniciferous@example.com')
@@ -49,7 +49,7 @@ class SharingTest(FunctionalTest):
 
         # On the list page, Oniciferous can see says that it's Edith's list
         self.wait_for(lambda: self.assertEqual(
-            list_page.get_list_ownerr(),
+            list_page.get_list_owner(),
             'edith@example.com'
         ))
 
