@@ -15,9 +15,10 @@
 {% block extra_content %}
 <div class="row">
     <div class="col-md-6">
-        <ul class="list-sharee">
+        <ul>
+            <li class="list-sharee">{{ list.owner.email }}</li>
             {% for sharee in list.shared_with.all %}
-                <li>{{ sharee.email }}</li>
+                <li class="list-sharee">{{ sharee.email }}</li>
             {% endfor %}
         </ul>
     </div>
