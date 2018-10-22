@@ -1,4 +1,4 @@
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
 from django.shortcuts import redirect, render
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
@@ -34,12 +34,24 @@ def my_lists(request, email):
     return render(request, 'lists/my_lists.html', {'owner': owner})
 
 
-def new_list(request):
-    form = NewListForm(data=request.POST)
-    if form.is_valid():
-        list_ = form.save(owner=request.user)
-        return redirect(list_)
-    return render(request, 'lists/home.html', {'form': form})
+class NewListView(CreateView):
+    form_class = NewListForm
+    template_name = 'lists/home.html'
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            list_ = form.save(owner=request.user)
+            return redirect(list_)
+        return render(request, 'lists/home.html', {'form': form})
+
+
+# def new_list(request):
+#     form = NewListForm(data=request.POST)
+#     if form.is_valid():
+#         list_ = form.save(owner=request.user)
+#         return redirect(list_)
+#     return render(request, 'lists/home.html', {'form': form})
 
 
 def share(request, list_id):
