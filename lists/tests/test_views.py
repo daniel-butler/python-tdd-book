@@ -11,7 +11,7 @@ from django.utils.html import escape
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from lists.views import home_page, new_list
+from lists.views import new_list
 from lists.models import Item, List
 from lists.forms import (
     ItemForm, ExistingListItemForm, ShareListForm,
