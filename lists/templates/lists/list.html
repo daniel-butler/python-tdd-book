@@ -15,8 +15,11 @@
 {% block extra_content %}
 <div class="row">
     <div class="col-md-6">
+        <label>Shared With:</h1>
         <ul>
-            <li class="list-sharee" id="id_list_owner">{{ list.owner.email }}</li>
+            {% if list.owner != None %}
+                <li class="list-sharee" id="id_list_owner">{{ list.owner.email }}</li>
+            {% endif %}
             {% for sharee in list.shared_with.all %}
                 <li class="list-sharee">{{ sharee.email }}</li>
             {% endfor %}

@@ -57,6 +57,9 @@ class ShareListForm(forms.Form):
 
     sharee = forms.EmailField(
         label=_('Share With'),
-        widget=EmailInput(attrs={'placeholder': 'your-friend@example.com', 'class': 'form-control'}),
+        widget=EmailInput(attrs={
+            'placeholder': 'your-friend@example.com',
+            'class': 'form-control'
+        }),
         error_messages={'required': EMPTY_EMAIL_ERROR},
     )
