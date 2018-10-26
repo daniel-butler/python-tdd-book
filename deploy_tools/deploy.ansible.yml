@@ -7,7 +7,7 @@
   tasks:
      - name: setup site folder
        file:
-           path: {{ working_directory }}
+           path: "{{ working_directory }}"
            state: directory
            owner: ansible_ssh_user
            group: ansible_ssh_user
