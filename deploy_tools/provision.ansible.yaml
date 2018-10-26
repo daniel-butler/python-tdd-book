@@ -2,10 +2,10 @@
 
 - hosts: all
 
-    vars:
+  vars:
         host: "{{ inventory_hostname }}"
 
-    tasks:
+  tasks:
 
         - name: Deadsnakes PPA to get Python 3.6
             apt_repository:
