@@ -17,7 +17,7 @@
        git:
            repo: https://github.com/dbutlerdb/python-tdd-book.git
            clone: yes
-           dest: {{ working_directory }}
+           dest: "{{ working_directory }}"
            version: master
 
      - name: setup python virtual environment
