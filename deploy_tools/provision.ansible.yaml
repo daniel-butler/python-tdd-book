@@ -13,9 +13,9 @@
    - name: make sure required packages are installed
      apt: pkg=nginx,git,python3.6,python3.6-venv state=present
 
-   - name: allow long hosnames in nginx
+   - name: allow long hostnames in nginx
      lineinfile:
-       des=/etc/nginx/nginx.conf
+       dest=/etc/nginx/nginx.conf
        regexp='(\s+)#? ?server_names_hash_bucket_size'
        backrefs=yes
        line='\1server_names_hash_bucket_size 64;'
