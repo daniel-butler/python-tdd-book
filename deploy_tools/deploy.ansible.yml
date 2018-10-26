@@ -26,4 +26,19 @@
            virtualenv: virtualenv
            virtualenv_python: python3.6
 
-          
+     - name: create .env file
+       template:
+           src=./env.template.j2
+           dest={{ working_directory }}/.env
+
+     - name: update static files
+       django_manage:
+           app_path: "{{ working_directory }}"
+           command: collectstatic
+           virtualenv: "{{ working_directory }}/virtualenv"
+
+     - name: update database
+       django_manage:
+           app_path: "{{ working_directory }}"
+           command: migrate
+           virtualenv: "{{ working_directory }}/virtualenv"
