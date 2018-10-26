@@ -31,7 +31,7 @@
                 dest=/etc/nginx/sites-enabled/{{ host }}
                 state=link
             notify:
-                - restart nginx
+                - restat nginx
 
         - name: write gunicorn service script
             template:
