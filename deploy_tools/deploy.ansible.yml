@@ -1,0 +1,29 @@
+---
+- hosts: all
+  vars:
+      host: "{{ inventory_hostname }}"
+      working_directory: "/home/{{ ansible_ssh_user }}/sites/{{ inventory_hostname }}"
+
+  tasks:
+     - name: setup site folder
+       file:
+           path: {{ working_directory }}
+           state: directory
+           owner: ansible_ssh_user
+           group: ansible_ssh_user
+           mode: 0775
+
+     - name: get latest source from master
+       git:
+           repo: https://github.com/dbutlerdb/python-tdd-book.git
+           clone: yes
+           dest: {{ working_directory }}
+           version: master
+
+     - name: setup python virtual environment
+       pip:
+           requirements: "{{ working_directory }}/requirements.txt"
+           virtualenv: virtualenv
+           virtualenv_python: python3.6
+
+          
