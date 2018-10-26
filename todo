@@ -1,0 +1,4 @@
+ansible - finish environment variables from fabfile
+ansible - get email password from management computer
+ansible - complete all tasks in fabfile
+configure ansible to pull from phabricator
