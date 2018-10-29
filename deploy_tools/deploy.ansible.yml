@@ -30,6 +30,12 @@
            src=./env.template.j2
            dest={{ working_directory }}.env
 
+     - name: set manage.py permissions
+       file:
+           path: "{{ working_directory }}manage.py"
+           owner: "{{ ansible_ssh_user }}"
+           mode: 0775
+
      - name: update static files
        django_manage:
            app_path: "{{ working_directory }}"
