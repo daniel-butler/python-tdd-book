@@ -18,6 +18,7 @@
            clone: yes
            dest: "{{ working_directory }}"
            version: master
+           force: yes
 
      - name: setup python virtual environment
        pip:
