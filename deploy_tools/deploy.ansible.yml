@@ -2,15 +2,14 @@
 - hosts: all
   vars:
       host: "{{ inventory_hostname }}"
-      working_directory: "/home/{{ ansible_ssh_user }}/sites/{{ inventory_hostname }}"
+      working_directory: "/home/{{ ansible_ssh_user }}/sites/{{ inventory_hostname }}/"
 
   tasks:
      - name: setup site folder
        file:
            path: "{{ working_directory }}"
            state: directory
-           owner: ansible_ssh_user
-           group: ansible_ssh_user
+           owner: daniel
            mode: 0775
 
      - name: get latest source from master
