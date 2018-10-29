@@ -9,7 +9,7 @@
        file:
            path: "{{ working_directory }}"
            state: directory
-           owner: daniel
+           owner: {{ ansible_ssh_user }}
            mode: 0775
 
      - name: get latest source from master
