@@ -42,16 +42,16 @@
            app_path: "{{ working_directory }}"
            command: collectstatic
            virtualenv: "{{ working_directory }}virtualenv"
-           notify:
-               - restart nginx
+       notify:
+           - restart nginx
 
      - name: update database
        django_manage:
            app_path: "{{ working_directory }}"
            command: migrate
            virtualenv: "{{ working_directory }}virtualenv"
-           notify:
-               - restart nginx
+       notify:
+           - restart nginx
 
 
   handlers:
