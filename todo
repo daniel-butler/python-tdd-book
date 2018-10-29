@@ -1,4 +1,7 @@
 # ansible - finish environment variables from fabfile
-ansible - get email password from management computer
-ansible - complete all tasks in fabfile
+# ansible - get email password from management computer
+# ansible - complete all tasks in fabfile
+lists-staging does not send emails gets a 500 error
+lists-staging the share and shared with buttons are missing from lists
+tests are not configured to run against the staging site
 configure ansible to pull from phabricator
