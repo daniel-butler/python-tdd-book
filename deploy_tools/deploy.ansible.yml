@@ -22,7 +22,7 @@
      - name: setup python virtual environment
        pip:
            requirements: "{{ working_directory }}/requirements.txt"
-           virtualenv: virtualenv
+           virtualenv: "{{ working_directory }}/virtualenv"
            virtualenv_python: python3.6
 
      - name: create .env file
