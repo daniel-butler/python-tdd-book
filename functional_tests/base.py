@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 from selenium import webdriver
 
+from .server_tools import create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
 from .server_tools import reset_database
 

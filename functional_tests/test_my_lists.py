@@ -1,5 +1,4 @@
 from .base import FunctionalTest
-from .server_tools import create_session_on_server
 
 
 class MyListsTest(FunctionalTest):
