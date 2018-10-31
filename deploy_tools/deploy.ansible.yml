@@ -44,6 +44,7 @@
            virtualenv: "{{ working_directory }}virtualenv"
        notify:
            - restart nginx
+           - restart gunicorn
 
      - name: update database
        django_manage:
@@ -52,8 +53,16 @@
            virtualenv: "{{ working_directory }}virtualenv"
        notify:
            - restart nginx
+           - restart gunicorn
 
 
   handlers:
       - name: restart nginx
         service: name=nginx state=restarted
+
+      - name: restart gunicorn
+        systemd:
+          name=gunicorn-{{ host }}
+          daemon_reload=yes
+          enabled=yes
+          state=restarted
