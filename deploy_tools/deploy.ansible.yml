@@ -71,5 +71,5 @@
            state=restarted
 
       - name: set environment variables
-        command: cat {{ working_director}}.env
+        command: cat {{ working_directory }}.env
 
