@@ -30,6 +30,9 @@
        template:
            src=./env.template.j2
            dest={{ working_directory }}.env
+       notify:
+           - set environment variables
+
 
      - name: set manage.py permissions
        file:
@@ -66,3 +69,7 @@
            daemon_reload=yes
            enabled=yes
            state=restarted
+
+      - name: set environment variables
+        command: cat {{ working_director}}.env
+
