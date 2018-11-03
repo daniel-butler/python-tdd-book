@@ -28,7 +28,7 @@
            virtualenv_python: python3.6
 
      - name: generate secret_key
-       shell: {{ working_directory }}virtualenv/bin/python manage.py shell generate_key
+       shell: "{{ working_directory }}virtualenv/bin/python manage.py shell generate_key"
        register: secret_key
        run_once: true
 
