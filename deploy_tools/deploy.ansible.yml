@@ -4,6 +4,7 @@
       host: "{{ inventory_hostname }}"
       working_directory: "/home/{{ ansible_ssh_user }}/sites/{{ inventory_hostname }}/"
 
+
   tasks:
      - name: setup site folder
        file:
@@ -25,6 +26,17 @@
            requirements: "{{ working_directory }}/requirements.txt"
            virtualenv: "{{ working_directory }}/virtualenv"
            virtualenv_python: python3.6
+
+     - name: generate secret_key
+       shell: {{ working_directory }}virtualenv/bin/python manage.py shell generate_key
+       register: secret_key
+       run_once: true
+
+     - set_fact:
+         secret_key: {{ secret_key.stdout }}
+
+     - debug: var=secret_key
+       run_once: true
 
      - name: create .env file
        template:
