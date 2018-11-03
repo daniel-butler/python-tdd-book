@@ -33,7 +33,7 @@
        run_once: true
 
      - set_fact:
-         secret_key: {{ secret_key.stdout }}
+         secret_key: "{{ secret_key.stdout }}"
 
      - debug: var=secret_key
        run_once: true
