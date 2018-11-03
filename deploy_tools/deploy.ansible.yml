@@ -30,13 +30,10 @@
      - name: generate secret_key
        django_manage:
            app_path: "{{ working_directory }}"
-           command: generate_key
+           command: shell generate_key
            virtualenv: "{{ working_directory }}virtualenv"
        register: secret_key
        run_once: true
-
-     - set_fact:
-         secret_key: "{{ secret_key.stdout }}"
 
      - debug: var=secret_key
        run_once: true
