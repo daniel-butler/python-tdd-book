@@ -27,10 +27,16 @@
            virtualenv: "{{ working_directory }}/virtualenv"
            virtualenv_python: python3.6
 
+     - name: set manage.py permissions
+       file:
+           path: "{{ working_directory }}manage.py"
+           owner: "{{ ansible_ssh_user }}"
+           mode: 0775
+
      - name: generate secret_key
        django_manage:
            app_path: "{{ working_directory }}"
-           command: shell generate_key
+           command: generate_key
            virtualenv: "{{ working_directory }}virtualenv"
        register: secret_key
        run_once: true
@@ -44,13 +50,6 @@
            dest={{ working_directory }}.env
        notify:
            - set environment variables
-
-
-     - name: set manage.py permissions
-       file:
-           path: "{{ working_directory }}manage.py"
-           owner: "{{ ansible_ssh_user }}"
-           mode: 0775
 
      - name: update static files
        django_manage:
