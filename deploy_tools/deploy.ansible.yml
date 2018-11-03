@@ -41,7 +41,7 @@
        register: secret_key
        run_once: true
 
-     - debug: var=secret_key.stdout
+     - debug: var=secret_key.out
        run_once: true
 
      - name: create .env file
