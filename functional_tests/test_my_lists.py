@@ -1,4 +1,5 @@
 from .base import FunctionalTest
+from time import sleep
 
 
 class MyListsTest(FunctionalTest):
@@ -7,11 +8,13 @@ class MyListsTest(FunctionalTest):
         # Edith is a logged in user
         self.create_pre_authenticated_session('edith@example.com')
 
-        # She goes o the home page and stats a list
+        # She goes to the home page and stats a list
         self.browser.get(self.live_server_url)
         self.add_list_item('Reticulate splines')
         self.add_list_item('Immanetize eschaton')
         first_list_url = self.browser.current_url
+
+        sleep(30)
 
         # She notices a "My lists" link, for the first time.
         self.browser.find_element_by_link_text('My lists').click()
