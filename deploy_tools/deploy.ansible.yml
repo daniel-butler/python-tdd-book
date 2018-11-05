@@ -48,10 +48,11 @@
        template:
            src=./env.template.j2
            dest={{ working_directory }}.env
-       notify:
-           - set environment variables
 
-     - debug: var=ansible_env
+     - name: set environment variables
+       command: cat {{ working_directory }}.env
+
+     - debug: ansible_env
        run_once: true
 
      - name: update static files
@@ -84,6 +85,4 @@
            enabled=yes
            state=restarted
 
-      - name: set environment variables
-        command: cat {{ working_directory }}.env
 
