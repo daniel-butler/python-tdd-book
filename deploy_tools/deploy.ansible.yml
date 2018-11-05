@@ -51,7 +51,7 @@
        notify:
            - set environment variables
 
-     - debug: ansible_env
+     - debug: var=ansible_env
        run_once: true
 
      - name: update static files
