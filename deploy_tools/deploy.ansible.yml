@@ -52,7 +52,7 @@
      - name: set environment variables
        command: cat {{ working_directory }}.env
 
-     - debug: ansible_env
+     - debug: var=ansible_env
        run_once: true
 
      - name: update static files
