@@ -30,6 +30,7 @@ window.Superlists.initialize = function(url) {
             }).done(function () {
                 window.Superlists.updateItems(url);
                 $('.has-error').hide();
+                form.find('input[name="text"]').val('');
             }).fail(function (xhr) {
                 $('.has-error').show();
                 if (xhr.responseJSON && xhr.responseJSON.error){
