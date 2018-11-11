@@ -1,4 +1,5 @@
 from selenium import webdriver
+from time import sleep
 
 from .base import FunctionalTest
 from .list_page import ListPage
@@ -19,14 +20,15 @@ class SharingTest(FunctionalTest):
         self.addCleanup(lambda: quit_if_possible(edith_browser))
 
         # Her friend Oniciferous is also hanging out on the lists site
-        oni_broswer = webdriver.Firefox()
-        self.addCleanup(lambda: quit_if_possible(oni_broswer))
-        self.browser = oni_broswer
+        oni_browser = webdriver.Firefox()
+        self.addCleanup(lambda: quit_if_possible(oni_browser))
+        self.browser = oni_browser
         self.create_pre_authenticated_session('oniciferous@example.com')
 
         # Edith goes to the home page and starts a list
         self.browser = edith_browser
         self.browser.get(self.live_server_url)
+        # sleep(600)
         list_page = ListPage(self).add_list_item('Get help')
 
         # She notices a "Share this list" option
@@ -41,7 +43,7 @@ class SharingTest(FunctionalTest):
         list_page.share_list_with('oniciferous@example.com')
 
         # Oniciferous now goes to the lists page with his browser
-        self.browser = oni_broswer
+        self.browser = oni_browser
         MyListsPage(self).go_to_my_lists_page()
 
         # He sees Edith's list in there!
