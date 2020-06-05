@@ -76,8 +76,7 @@ class LoginTest(FunctionalTest):
                     lines = [l.decode('utf-8') for l in lines]
                     if f'Subject: {subject}' in lines:
                         email_id = i
-                        body = '\n'.join(lines)
-                        return body
+                        return '\n'.join(lines)
                 time.sleep(5)
         finally:
             if email_id:
